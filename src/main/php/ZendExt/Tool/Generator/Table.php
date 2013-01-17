@@ -1,10 +1,4 @@
 <?php
-/*
-*  Copyright 2011, Monits, S.A.
-*  Released under the Apache 2 and New BSD Licenses.
-*  More information: https://github.com/Monits/ZendExt/
-*/
-
 /**
  * Tables code generator.
  *
@@ -13,10 +7,15 @@
  * @copyright 2011 Monits
  * @license   Copyright (C) 2011. All rights reserved.
  * @version   Release: 1.3.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.3.0
  */
 
+/*
+*  Copyright 2011, Monits, S.A.
+*  Released under the Apache 2 and New BSD Licenses.
+*  More information: https://github.com/Monits/ZendExt/
+*/
 /**
  * Tables code generator.
  *
@@ -26,7 +25,7 @@
  * @copyright 2011 Monits
  * @license   Copyright 2011. All rights reserved.
  * @version   Release: 1.0.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.3.0
  */
 class ZendExt_Tool_Generator_Table extends ZendExt_Tool_Generator_Abstract
@@ -77,8 +76,12 @@ class ZendExt_Tool_Generator_Table extends ZendExt_Tool_Generator_Abstract
      *
      * @return void
      */
-    public function _generateTable($table)
+    private function _generateTable($table)
     {
+        $this->_getLogger()->debug(
+            'Generating table class for table "' . $table . '"'
+        );
+    	
         if (!isset($this->_schema[$table])) {
             throw new ZendExt_Tool_Generator_Exception(
                 'The asked table does not exists (' . $table . ')'

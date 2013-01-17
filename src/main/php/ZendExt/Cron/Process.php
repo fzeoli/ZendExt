@@ -1,10 +1,4 @@
 <?php
-/*
-*  Copyright 2011, Monits, S.A.
-*  Released under the Apache 2 and New BSD Licenses.
-*  More information: https://github.com/Monits/ZendExt/
-*/
-
 /**
  * Main process for Cron tasks.
  *
@@ -13,10 +7,15 @@
  * @copyright 2011 Monits
  * @license   Copyright (C) 2011. All rights reserved.
  * @version   Release: 1.0.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.0.0
  */
 
+/*
+ *  Copyright 2011, Monits, S.A.
+*  Released under the Apache 2 and New BSD Licenses.
+*  More information: https://github.com/Monits/ZendExt/
+*/
 /**
  * Main process for Cron tasks.
  *
@@ -26,7 +25,7 @@
  * @copyright 2011 Monits
  * @license   Copyright 2011. All rights reserved.
  * @version   Release: 1.0.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.0.0
  */
 abstract class ZendExt_Cron_Process
@@ -188,8 +187,9 @@ abstract class ZendExt_Cron_Process
         if ($appConfig) {
 
             try {
+                $env = isset($appConfig->env) ? $this->_config->env : 'cron';
                 $app = new Zend_Application(
-                    'cron',
+                    $env,
                     $appConfig
                 );
 
@@ -365,12 +365,21 @@ abstract class ZendExt_Cron_Process
     private function _checkLock()
     {
         if ($this->_pidFile && file_exists($this->_pidFile)) {
-
             $msg = 'A lock file was found when trying to execute '
                 .get_class($this);
 
             $this->_logger->info($msg);
-            throw new ZendExt_Cron_LockException($msg);
+
+            $pid = intval(file_get_contents($this->_pidFile));
+            if ($pid !== false && @pcntl_getpriority($pid) === false) {
+                $this->_logger->warn('A pid file without a process was found!');
+                unlink($this->_pidFile);
+                $this->_logger->warn('The pid file was deleted');
+            } else {
+                throw new ZendExt_Cron_LockException($msg);
+            }
+
+
         }
     }
 
@@ -473,4 +482,5 @@ abstract class ZendExt_Cron_Process
     protected function _shutdown()
     {
     }
+
 }

@@ -1,10 +1,4 @@
 <?php
-/*
-*  Copyright 2011, Monits, S.A.
-*  Released under the Apache 2 and New BSD Licenses.
-*  More information: https://github.com/Monits/ZendExt/
-*/
-
 /**
  * Abstract template.
  *
@@ -17,6 +11,11 @@
  * @since     1.0.0
  */
 
+/*
+*  Copyright 2011, Monits, S.A.
+*  Released under the Apache 2 and New BSD Licenses.
+*  More information: https://github.com/Monits/ZendExt/
+*/
 /**
  * Abstract template.
  *
@@ -105,7 +104,7 @@ abstract class ZendExt_Crud_TemplateAbstract implements ZendExt_Crud_Template
     /**
      * Set the style of the form.
      *
-     * @return string
+     * @return void
      */
     private function _formStyle()
     {
@@ -115,7 +114,5 @@ abstract class ZendExt_Crud_TemplateAbstract implements ZendExt_Crud_Template
              'input{vertical-align: top;}' .
              'dd{margin:0 0 10px;float:left}' .
              '.checkboxLabel{margin-left: 30px; width: 200px;}';
-
-        return $style;
     }
 }

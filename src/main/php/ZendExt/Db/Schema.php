@@ -1,10 +1,4 @@
 <?php
-/*
-*  Copyright 2011, Monits, S.A.
-*  Released under the Apache 2 and New BSD Licenses.
-*  More information: https://github.com/Monits/ZendExt/
-*/
-
 /**
  * Database schema descriptor.
  *
@@ -13,10 +7,15 @@
  * @copyright 2011 Monits
  * @license   Copyright (C) 2011. All rights reserved.
  * @version   Release: 1.3.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.3.0
  */
 
+/*
+*  Copyright 2011, Monits, S.A.
+*  Released under the Apache 2 and New BSD Licenses.
+*  More information: https://github.com/Monits/ZendExt/
+*/
 /**
  * Database schema descriptor.
  *
@@ -26,7 +25,7 @@
  * @copyright 2011 Monits
  * @license   Copyright 2011. All rights reserved.
  * @version   Release: 1.3.0
- * @link      http://www.zendext.com
+ * @link      http://www.monits.com
  * @since     1.3.0
  */
 class ZendExt_Db_Schema
@@ -37,21 +36,15 @@ class ZendExt_Db_Schema
     /**
      * Creates a new descriptor.
      *
-     * @param Zend_Config|array $config The database configuration.
-     *                                  Standard config for Zend_Db is required
-     *                                  plus the adapter to use.
+     * @param string            $adapter The adapter to be used.
+     * @param Zend_Config|array $config  The database configuration.
+     *                                   Standard config for Zend_Db is required
      *
      * @return ZendExt_Db_Schema
      */
-    public function __construct($config)
+    public function __construct($adapter, $config)
     {
-        if ($config instanceof Zend_Config) {
-            $config = $config->toArray();
-        }
-
-        // TODO: Throw exception if no adapter was given?
-
-        $this->_db = Zend_Db::factory($config['adapter'], $config);
+        $this->_db = Zend_Db::factory($adapter, $config);
     }
 
     /**

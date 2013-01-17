@@ -1,10 +1,4 @@
 <?php
-/*
-*  Copyright 2011, Monits, S.A.
-*  Released under the Apache 2 and New BSD Licenses.
-*  More information: https://github.com/Monits/ZendExt/
-*/
-
 /**
  * Code generator CRUD.
  *
@@ -13,10 +7,15 @@
  * @copyright 2011 Monits
  * @license   Copyright (C) 2011. All rights reserved.
  * @version   Release: 1.0.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.0.0
  */
 
+/*
+*  Copyright 2011, Monits, S.A.
+*  Released under the Apache 2 and New BSD Licenses.
+*  More information: https://github.com/Monits/ZendExt/
+*/
 /**
  * Code generator CRUD.
  *
@@ -26,7 +25,7 @@
  * @copyright 2011 Monits
  * @license   Copyright 2011. All rights reserved.
  * @version   Release: 1.0.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.0.0
  */
 class ZendExt_Tool_Generator_CRUD extends ZendExt_Tool_Generator_Abstract
@@ -40,6 +39,10 @@ class ZendExt_Tool_Generator_CRUD extends ZendExt_Tool_Generator_Abstract
      */
     protected function _doGenerate()
     {
+        $this->_getLogger()->debug(
+            'Generating CRUD Controller class for table "' . $table . '"'
+        );
+    	
         $builder = $this->_opts->builder;
 
         $namespace = $this->_opts->namespace;
@@ -65,15 +68,15 @@ class ZendExt_Tool_Generator_CRUD extends ZendExt_Tool_Generator_Abstract
                          'defaultValue' => $builder,
                      ),
                      array(
-                         'name'	        => '_listTitle',
+                         'name'            => '_listTitle',
                          'visibility'   => 'protected',
                      ),
                      array(
-                         'name'	        => '_newTitle',
+                         'name'            => '_newTitle',
                          'visibility'   => 'protected',
                      ),
                      array(
-                         'name'	        => '_updateTitle',
+                         'name'            => '_updateTitle',
                          'visibility'   => 'protected',
                      ),
                  )
@@ -111,14 +114,18 @@ class ZendExt_Tool_Generator_CRUD extends ZendExt_Tool_Generator_Abstract
             );
         }
 
-        $docMethod = new Zend_CodeGenerator_Php_Docblock(array(
-            'shortDescription' => 'Init the CRUD',
-            'tags' => array(
-                new Zend_CodeGenerator_Php_Docblock_Tag_Return(array(
-                    'datatype' => 'void',
-                ))
+        $docMethod = new Zend_CodeGenerator_Php_Docblock(
+            array(
+                'shortDescription' => 'Init the CRUD',
+                'tags' => array(
+                    new Zend_CodeGenerator_Php_Docblock_Tag_Return(
+                        array(
+                            'datatype' => 'void',
+                        )
+                    )
+                )
             )
-        ));
+        );
 
         $repository = '';
         $adapterType = '';

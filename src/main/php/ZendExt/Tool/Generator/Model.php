@@ -1,10 +1,4 @@
 <?php
-/*
-*  Copyright 2011, Monits, S.A.
-*  Released under the Apache 2 and New BSD Licenses.
-*  More information: https://github.com/Monits/ZendExt/
-*/
-
 /**
  * Models code generator.
  *
@@ -13,10 +7,15 @@
  * @copyright 2011 Monits
  * @license   Copyright (C) 2011. All rights reserved.
  * @version   Release: 1.3.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.3.0
  */
 
+/*
+*  Copyright 2011, Monits, S.A.
+*  Released under the Apache 2 and New BSD Licenses.
+*  More information: https://github.com/Monits/ZendExt/
+*/
 /**
  * Models code generator.
  *
@@ -26,7 +25,7 @@
  * @copyright 2011 Monits
  * @license   Copyright 2011. All rights reserved.
  * @version   Release: 1.0.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.3.0
  */
 class ZendExt_Tool_Generator_Model extends ZendExt_Tool_Generator_Abstract
@@ -96,7 +95,10 @@ class ZendExt_Tool_Generator_Model extends ZendExt_Tool_Generator_Abstract
      */
     private function _generateModel($table)
     {
-
+        $this->_getLogger()->debug(
+            'Generating model class for table "' . $table . '"'
+        );
+    	
         if (!isset($this->_schema[$table])) {
             throw new ZendExt_Exception(
                 'The table doesn\'t exist'
@@ -237,8 +239,7 @@ class ZendExt_Tool_Generator_Model extends ZendExt_Tool_Generator_Abstract
                     . "\$this->_{$name} = "
                     . '$' . self::CONSTRUCT_PARAM . "['{$k}'];"
                     . PHP_EOL;
-
-        };
+        }
 
             $body .= '} else {' . PHP_EOL;
         $body .= $this->_indent() . 'throw new Exception(' . PHP_EOL;
@@ -283,9 +284,9 @@ class ZendExt_Tool_Generator_Model extends ZendExt_Tool_Generator_Abstract
         $method->setBody('return $this->_' . $name . ';');
 
         $docReturnTag = new Zend_CodeGenerator_Php_Docblock_Tag_Return(
-             array(
+            array(
                 'datatype' => $type
-             )
+            )
         );
 
         $docblock = new Zend_CodeGenerator_Php_Docblock(
@@ -387,4 +388,5 @@ class ZendExt_Tool_Generator_Model extends ZendExt_Tool_Generator_Abstract
                 break;
         }
     }
+    
 }

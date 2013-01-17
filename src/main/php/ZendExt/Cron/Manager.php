@@ -1,10 +1,4 @@
 <?php
-/*
-*  Copyright 2011, Monits, S.A.
-*  Released under the Apache 2 and New BSD Licenses.
-*  More information: https://github.com/Monits/ZendExt/
-*/
-
 /**
  * Manager for cron process.
  *
@@ -13,10 +7,15 @@
  * @copyright 2011 Monits
  * @license   Copyright (C) 2011. All rights reserved.
  * @version   Release: 1.0.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.0.0
  */
 
+/*
+*  Copyright 2011, Monits, S.A.
+*  Released under the Apache 2 and New BSD Licenses.
+*  More information: https://github.com/Monits/ZendExt/
+*/
 /**
  * Manager for cron process.
  *
@@ -26,7 +25,7 @@
  * @copyright 2011 Monits
  * @license   Copyright 2011. All rights reserved.
  * @version   Release: 1.0.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.0.0
  */
 final class ZendExt_Cron_Manager
@@ -323,10 +322,12 @@ final class ZendExt_Cron_Manager
                 $this->_config->process,
                 $extraConfig
             );
+            
             $process->execute();
         } catch ( ZendExt_Cron_LockException $e ) {
 
-            $this->_log($e->getMessage(), 'crit');
+            $this->_log($e->getMessage(), 'warn');
+            
         } catch ( ZendExt_Cron_ErrorException $e ) {
 
             $this->_log($e->getMessage(), 'crit');

@@ -1,10 +1,4 @@
 <?php
-/*
-*  Copyright 2011, Monits, S.A.
-*  Released under the Apache 2 and New BSD Licenses.
-*  More information: https://github.com/Monits/ZendExt/
-*/
-
 /**
  * Builders code generator.
  *
@@ -13,10 +7,15 @@
  * @copyright 2011 Monits
  * @license   Copyright (C) 2011. All rights reserved.
  * @version   Release: 1.3.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.3.0
  */
 
+/*
+*  Copyright 2011, Monits, S.A.
+*  Released under the Apache 2 and New BSD Licenses.
+*  More information: https://github.com/Monits/ZendExt/
+*/
 /**
  * Builders code generator.
  *
@@ -26,7 +25,7 @@
  * @copyright 2011 Monits
  * @license   Copyright 2011. All rights reserved.
  * @version   Release: 1.0.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.3.0
  */
 class ZendExt_Tool_Generator_Builder extends ZendExt_Tool_Generator_Abstract
@@ -83,7 +82,10 @@ class ZendExt_Tool_Generator_Builder extends ZendExt_Tool_Generator_Abstract
      */
     private function _generateBuilder($table)
     {
-
+        $this->_getLogger()->debug(
+            'Generating builder class for table "' . $table . '"'
+        );
+        
         if (!isset($this->_schema[$table])) {
             throw new ZendExt_Tool_Generator_Exception(
                 'The asked table does not exists (' . $table . ')'
@@ -188,24 +190,26 @@ class ZendExt_Tool_Generator_Builder extends ZendExt_Tool_Generator_Abstract
             )
             . "' => array("
             . PHP_EOL;
-
+            
         if (!$desc['nullable'] && null === $desc['default']) {
             $ret .= str_repeat(self::TAB, 2) . "'required' => true," . PHP_EOL;
         }
 
         $default = null;
-
         if ($desc['default'] === null) {
             if ($desc['nullable']) {
                 $default = 'null';
             }
         } else {
             $default = $desc['default'];
+            if (!is_numeric($default)) {
+                $default = "'" . $default . "'";
+            }
         }
 
         if ($default !== null) {
             $ret .= str_repeat(self::TAB, 2) . "'default' => "
-             . $this->_transformDefaultToPhp($default)
+            . $this->_transformDefaultToPhp($default)
             . ',' . PHP_EOL;
         }
 
@@ -263,7 +267,7 @@ class ZendExt_Tool_Generator_Builder extends ZendExt_Tool_Generator_Abstract
                     . ')';
 
             case ZendExt_Db_Schema_TypeMappingAdapter_Generic::TYPE_BOOLEAN:
-                return 'new Zend_Validate_Boolean()';
+                return 'new ZendExt_Validate_Boolean()';
 
             case ZendExt_Db_Schema_TypeMappingAdapter_Generic::TYPE_DECIMAL:
             case ZendExt_Db_Schema_TypeMappingAdapter_Generic::TYPE_FLOAT:
@@ -331,8 +335,7 @@ class ZendExt_Tool_Generator_Builder extends ZendExt_Tool_Generator_Abstract
     private function _transformDefaultToPhp($default)
     {
         switch ($default) {
-            case
-            ZendExt_Db_Schema_TypeMappingAdapter_Generic::CURRENT_TIMESTAMP:
+            case ZendExt_Db_Schema_TypeMappingAdapter_Generic::CURRENT_TIMESTAMP:
                 return 'date(\'c\')';
 
             case ZendExt_Db_Schema_TypeMappingAdapter_Generic::CURRENT_DATE:

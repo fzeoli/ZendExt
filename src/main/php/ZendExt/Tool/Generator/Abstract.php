@@ -1,10 +1,4 @@
 <?php
-/*
-*  Copyright 2011, Monits, S.A.
-*  Released under the Apache 2 and New BSD Licenses.
-*  More information: https://github.com/Monits/ZendExt/
-*/
-
 /**
  * Abstract code generator.
  *
@@ -13,10 +7,15 @@
  * @copyright 2011 Monits
  * @license   Copyright (C) 2011. All rights reserved.
  * @version   Release: 1.0.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.3.0
  */
 
+/*
+*  Copyright 2011, Monits, S.A.
+*  Released under the Apache 2 and New BSD Licenses.
+*  More information: https://github.com/Monits/ZendExt/
+*/
 /**
  * Abstract code generator.
  *
@@ -26,7 +25,7 @@
  * @copyright 2011 Monits
  * @license   Copyright 2011. All rights reserved.
  * @version   Release: 1.3.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.3.0
  */
 abstract class ZendExt_Tool_Generator_Abstract
@@ -122,9 +121,8 @@ abstract class ZendExt_Tool_Generator_Abstract
         if ($this->_requiresSchema) {
             if ($opts->dbname === null || $opts->username === null
                 || $opts->adapter === null || $opts->password === null) {
-
-                    throw new ZendExt_Tool_Generator_Exception(
-                        'All database options are required.'
+                throw new ZendExt_Tool_Generator_Exception(
+                    'All database options are required.'
                 );
             }
         }
@@ -135,16 +133,19 @@ abstract class ZendExt_Tool_Generator_Abstract
         if ($this->_requiresSchema) {
             $this->_getLogger()->debug('Schema required, getting it');
 
-            $desc = new ZendExt_Db_Schema(array(
-                'host' => $this->_opts->host === null ?
-                    'localhost' : $this->_opts->host,
-                'dbname' => $this->_opts->dbname,
-                'username' => $this->_opts->username,
-                'password' => $this->_opts->password,
-                'adapter' => $this->_opts->adapter
-            ));
+            $desc = new ZendExt_Db_Schema(
+                $this->_opts->adapter,
+                array(
+                    'host' => $this->_opts->host === null ?
+                        'localhost' : $this->_opts->host,
+                    'dbname' => $this->_opts->dbname,
+                    'username' => $this->_opts->username,
+                    'password' => $this->_opts->password
+                )
+            );
 
             foreach ($desc->listTables() as $table) {
+            	$this->_getLogger()->debug('Describing table ' . $table);
                 $this->_schema[$table] = $desc->describeTable($table);
             }
         }

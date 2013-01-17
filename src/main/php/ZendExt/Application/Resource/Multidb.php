@@ -1,10 +1,23 @@
 <?php
+
+/**
+ * Real multidb support with slaves and sharding per table.
+ *
+ * @category  ZendExt
+ * @package   ZendExt_Application_Resource
+ * @author    jsotuyod <juansotuyo@gmail.com>
+ * @copyright 2011 Monits
+ * @license   Copyright (C) 2011. All rights reserved.
+ * @version   Release: 1.0.0
+ * @link      http://www.monits.com/
+ * @since     1.0.0
+ */
+
 /*
 *  Copyright 2011, Monits, S.A.
 *  Released under the Apache 2 and New BSD Licenses.
 *  More information: https://github.com/Monits/ZendExt/
 */
-
 /**
  * Real multidb support with slaves and sharding per table.
  *
@@ -14,20 +27,7 @@
  * @copyright 2011 Monits
  * @license   Copyright (C) 2011. All rights reserved.
  * @version   Release: 1.0.0
- * @link      http://www.zendext.com/
- * @since     1.0.0
- */
-
-/**
- * Real multidb support with slaves and sharding per table.
- *
- * @category  ZendExt
- * @package   ZendExt_Application_Resource
- * @author    jsotuyod <juansotuyo@gmail.com>
- * @copyright 2011 Monits
- * @license   Copyright (C) 2011. All rights reserved.
- * @version   Release: 1.0.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.0.0
  */
 class ZendExt_Application_Resource_Multidb

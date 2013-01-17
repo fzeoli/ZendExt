@@ -1,10 +1,4 @@
 <?php
-/*
-*  Copyright 2011, Monits, S.A.
-*  Released under the Apache 2 and New BSD Licenses.
-*  More information: https://github.com/Monits/ZendExt/
-*/
-
 /**
  * Utily to generate urls from model objects.
  *
@@ -13,10 +7,15 @@
  * @copyright 2011 Monits
  * @license   Copyright (C) 2011. All rights reserved
  * @version   Release: 1.5.0
- * @link      http://www.monits.com
+ * @link      http://www.monits.com/
  * @since     1.5.0
  */
 
+/*
+*  Copyright 2011, Monits, S.A.
+*  Released under the Apache 2 and New BSD Licenses.
+*  More information: https://github.com/Monits/ZendExt/
+*/
 /**
  * Utily to generate urls from model objects.
  *
@@ -40,14 +39,17 @@ class ZendExt_View_Helper_ObjToUrl extends Zend_View_Helper_Abstract
      * @param mixed $obj The model object to use.
      *
      * @return string
+     * @throws Exception
      */
     public function objToUrl($obj)
     {
-        // TODO: Maybe this would be more efficient using and interface with
-        // a toArray and getType method instead of calling getters
-        // and get_class? Benchmark!
+        /*
+         * TODO : Maybe this would be more efficient using and interface with
+         *        a toArray and getType method instead of calling getters 
+         *        and get_class? Benchmark!
+         */
 
-        $conf = $this->getTemplates();
+        $conf = $this->_getTemplates();
         $class = get_class($obj);
 
         if (!isset($conf[$class])) {
@@ -72,8 +74,10 @@ class ZendExt_View_Helper_ObjToUrl extends Zend_View_Helper_Abstract
      * Retrieves the helper's templates.
      *
      * @return array
+     * 
+     * @throws Exception
      */
-    private function getTemplates()
+    private function _getTemplates()
     {
         if (null === self::$_templates) {
             throw new Exception(

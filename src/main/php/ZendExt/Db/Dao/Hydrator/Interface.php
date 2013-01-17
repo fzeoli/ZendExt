@@ -1,10 +1,4 @@
 <?php
-/*
-*  Copyright 2011, Monits, S.A.
-*  Released under the Apache 2 and New BSD Licenses.
-*  More information: https://github.com/Monits/ZendExt/
-*/
-
 /**
  * Interface for hydrators to transform database rows into rich objects.
  *
@@ -13,10 +7,15 @@
  * @copyright 2010 Juan Sotuyo
  * @license   Copyright (C) 2011. All rights reserved.
  * @version   Release: 1.0.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.0.0
  */
 
+/*
+*  Copyright 2011, Monits, S.A.
+*  Released under the Apache 2 and New BSD Licenses.
+*  More information: https://github.com/Monits/ZendExt/
+*/
 /**
  * Interface for hydrators to transform database rows into rich objects.
  *
@@ -26,7 +25,7 @@
  * @copyright 2010 Juan Sotuyo
  * @license   Copyright 2011. All rights reserved.
  * @version   Release: 1.0.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.0.0
  */
 interface ZendExt_Db_Dao_Hydrator_Interface
@@ -34,7 +33,7 @@ interface ZendExt_Db_Dao_Hydrator_Interface
     /**
      * Hydrate a row as retrieved from the database into a rich object.
      *
-     * @param array  $row The row's data, as retrieved from the database.
+     * @param array $row The row's data, as retrieved from the database.
      *
      * @return mixed The rich obejct created from the original row.
      */

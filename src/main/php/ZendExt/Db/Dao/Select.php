@@ -1,9 +1,4 @@
 <?php
-/*
-*  Copyright 2011, Monits, S.A.
-*  Released under the Apache 2 and New BSD Licenses.
-*  More information: https://github.com/Monits/ZendExt/
-*/
 
 /**
  * Custom select for DAOs.
@@ -13,7 +8,7 @@
  * @copyright 2010 Juan Sotuyo
  * @license   Copyright (C) 2011. All rights reserved.
  * @version   Release: 1.0.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.0.0
  */
 
@@ -26,9 +21,14 @@
  * @copyright 2010 Juan Sotuyo
  * @license   Copyright 2011. All rights reserved.
  * @version   Release: 1.0.0
- * @link      http://www.zendext.com/
+ * @link      http://www.monits.com/
  * @since     1.0.0
  */
+/*
+*  Copyright 2011, Monits, S.A.
+*  Released under the Apache 2 and New BSD Licenses.
+*  More information: https://github.com/Monits/ZendExt/
+*/
 class ZendExt_Db_Dao_Select extends Zend_Db_Table_Select
 {
     /*
@@ -52,6 +52,13 @@ class ZendExt_Db_Dao_Select extends Zend_Db_Table_Select
      * @var array
      */
     protected $_originalFrom;
+
+    /**
+     * The original columns, when deferred calls where first triggered.
+     *
+     * @var array
+     */
+    protected $_originalColumns;
 
     /**
      * Indicates how many times the deferred calls whre triggered.
@@ -336,18 +343,20 @@ class ZendExt_Db_Dao_Select extends Zend_Db_Table_Select
      * * joinRightUsing
      * * joinLeftUsing
      *
-     * @param  null|string               $type   Type of join; inner, left, and
-     *                                           null are currently supported
-     * @param  array|string|Zend_Db_Expr $name   Table name
-     * @param  string                    $cond   The column on which to join
-     * @param  array|string              $cols   The columns to select from the
-     *                                           joined table
-     * @param  string                    $schema The database name to specify,
+     * @param null|string               $type   Type of join; inner, left, and
+     *                                          null are currently supported
+     * @param array|string|Zend_Db_Expr $name   Table name
+     * @param string                    $cond   The column on which to join
+     * @param array|string              $cols   The columns to select from the
+     *                                          joined table
+     * @param string                    $schema The database name to specify,
      *                                           if any.
      *
      * @return ZendExt_Db_Dao_Select This ZendExt_Db_Dao_Select object.
      */
-    public function _joinUsing($type, $name, $cond, $cols = '*', $schema = null)
+    public function _joinUsing($type, $name, $cond, $cols = '*', 
+        $schema = null
+    )
     {
         $this->_calls[] = array(
             self::CALL_METHOD    => __FUNCTION__,
@@ -403,12 +412,15 @@ class ZendExt_Db_Dao_Select extends Zend_Db_Table_Select
 
         // Store the original from now the call stack is started
         $this->_originalFrom = $this->_parts[self::FROM];
+        $this->_originalColumns = $this->_parts[self::COLUMNS];
 
         if (null === $this->_table) {
             if (isset($this->_tables[0])) {
                 $this->setTable($this->_tables[0]);
             } else {
-                throw new ZendExt_Db_Dao_Select_Exception('No tables were set!');
+                throw new ZendExt_Db_Dao_Select_Exception(
+                    'No tables were set!'
+                );
             }
         }
 
@@ -440,6 +452,7 @@ class ZendExt_Db_Dao_Select extends Zend_Db_Table_Select
             return;
         }
 
+        $this->_parts[self::COLUMNS] = $this->_originalColumns;
         $this->_parts[self::FROM] = $this->_originalFrom;
         $this->_parts[self::WHERE] = array();
         $this->_parts[self::HAVING] = array();
